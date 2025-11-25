@@ -31,7 +31,7 @@ function CheckoutPage() {
     restaurantId: cart.cartItems[0]?.restaurantId,
     restaurantName: cart.cartItems[0]?.restaurantName,
     status:'pending',
-    total: total
+    totalPrice: total
   })
 
   const navigate = useNavigate()
