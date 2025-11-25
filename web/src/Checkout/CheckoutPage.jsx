@@ -30,6 +30,7 @@ function CheckoutPage() {
     payment_method: 'COD',
     restaurantId: cart.cartItems[0]?.restaurantId,
     restaurantName: cart.cartItems[0]?.restaurantName,
+    status:'pending',
     total: total
   })
 
@@ -51,7 +52,7 @@ function CheckoutPage() {
       await addOrder(initial_order)
       await clearCart()
       toast.success("Đặt hàng thành công")
-      navigate('/restaurant')
+      navigate('/restaurants')
     }
     catch (err) {
       toast.warning("Lỗi")
