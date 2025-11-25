@@ -6,18 +6,18 @@ export const fetchRestaurant = async () => {
         const colRef = collection(db, "restaurants");
         const snapshot = await getDocs(colRef);
 
-        const data = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        }))
+        // Lọc những nhà hàng active
+        const data = snapshot.docs
+            .map(doc => ({ id: doc.id, ...doc.data() }))
+            .filter(restaurant => restaurant.active === true);
 
-        console.log(data);
+        console.log("Active restaurants:", data);
         return data;
     } catch (error) {
         console.log("Error fetching restaurants: ", error);
         return [];
     }
-}
+};
 
 export const fetchRestaurantById = async (restaurantId) => {
   try {

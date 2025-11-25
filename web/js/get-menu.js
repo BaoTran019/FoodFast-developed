@@ -1,24 +1,27 @@
 import { db } from "./firebase-config";
-import { collection, getDocs, getDoc, doc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js"
+import { collection, getDocs, getDoc, doc, query, where } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js"
 
 export const fetchMenu = async (restaurantId) => {
     try {
         const colRef = collection(db, "restaurants", restaurantId, "menuItems");
-        const snapshot = await getDocs(colRef);
+
+        // Query chỉ lấy món đang bán
+        const q = query(colRef, where("available", "==", true));
+        const snapshot = await getDocs(q);
 
         const items = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
         }));
 
-        console.log(items);
+        console.log("Available menu items:", items);
         return items;
 
     } catch (error) {
         console.log("Error fetching menu: ", error);
         return [];
     }
-}
+};
 
 export const fetchMenuItem = async (restaurantId, menuItemId) => {
     try {
