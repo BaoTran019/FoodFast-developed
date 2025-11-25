@@ -1,8 +1,12 @@
 import './OrderCard.css'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import OrderDetail from '../OrderItem/OrderDetail'
+import { OrderContext } from '../../context/OrderContext'
+import { Button } from 'react-bootstrap'
 
 function OrderCard({ order }) {
+
+  const { updateStatus } = useContext(OrderContext)
 
   const [open, setOpen] = useState(false)
 
@@ -15,6 +19,16 @@ function OrderCard({ order }) {
       return <h5 className={`customed-header-6 status ${order.status}`}>{order.status}</h5>
     else if (order.status === 'completed')
       return <h5 className={`customed-header-6 status ${order.status}`}>{order.status}</h5>
+  }
+
+  const handleConfirm = async (e) => {
+    e.stopPropagation();
+    await updateStatus(order.id)
+  }
+  const renderButtonConfirm = () => {
+    if (order.status === 'delivering')
+      return <Button style={{ marginInline: '5px' }} onClick={(e) => handleConfirm(e)}>Xác nhận đã giao</Button>
+    return
   }
 
   const date = order.createdAt.toDate();  // chuyển thành JS Date
@@ -36,6 +50,7 @@ function OrderCard({ order }) {
         <h5 className='customed-header-6' style={{ fontWeight: 'lighter' }}>{order.payment_method}</h5>
         <h6 className='customed-header-6' style={{ marginInline: '0.8rem' }}>•</h6>
         {renderStatus()}
+        {renderButtonConfirm()}
       </div>
 
       <OrderDetail show={open} handleCloseModal={setOpen} order={order} />

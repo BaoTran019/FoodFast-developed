@@ -10,7 +10,8 @@ function OrderDetail({ show, handleCloseModal, order }) {
   const renderStatus = () => {
     if (order.status === 'pending') return <span className={order.status}>Đang chờ tiếp nhận</span>
     if (order.status === 'processing') return <span className={order.status}>Đang xử lý</span>
-    if (order.status === 'delivered') return <span className={order.status}>Đã giao</span>
+    if (order.status === 'delivering') return <span className={order.status}>Đang giao</span>
+    if (order.status === 'completed') return <span className={order.status}>Đang giao</span>
   }
 
   return (

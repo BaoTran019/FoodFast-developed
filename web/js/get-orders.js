@@ -1,5 +1,5 @@
 import { db } from "./firebase-config";
-import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+import { collection, query, where, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
 export const fetchOrders = async (uid) => {
     try {
@@ -17,3 +17,15 @@ export const fetchOrders = async (uid) => {
         return [];
     }
 }
+
+export const updateOrderStatus = async (orderId, status) => {
+  try {
+    const orderRef = doc(db, "orders", orderId); // tham chiếu đến document
+    await updateDoc(orderRef, { status });
+    console.log(`Order ${orderId} updated to status: ${status}`);
+    return true;
+  } catch (err) {
+    console.error("Error updating order status:", err);
+    return false;
+  }
+};

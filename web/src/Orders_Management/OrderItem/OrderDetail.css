@@ -10,6 +10,9 @@ span.pending {
 span.processing {
     color: rgb(242, 145, 0);
 }
-span.delivered {
+span.delivering {
+    color: rgb(70, 133, 231);
+}
+span.completed {
     color: rgb(0, 187, 12);
 }

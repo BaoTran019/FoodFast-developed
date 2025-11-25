@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { fetchOrders } from "../../js/get-orders";
+import { fetchOrders, updateOrderStatus } from "../../js/get-orders";
 import { createOrder } from "../../js/create-order"
 
 import { AuthenContext } from "./AuthContext";
@@ -38,8 +38,24 @@ const OrderProvider = ({ children }) => {
         }
     }
 
+    const updateStatus = async (orderId) => {
+        try {
+            // 1. Update backend / firestore
+            await updateOrderStatus(orderId, 'completed');
+
+            // 2. Update local state
+            setOrders(prevOrders =>
+                prevOrders.map(order =>
+                    order.id === orderId ? { ...order, status: 'completed' } : order
+                )
+            );
+        } catch (err) {
+            console.error("Failed to update status:", err);
+        }
+    };
+
     return (
-        <OrderContext.Provider value={{ orders, addOrder }}>
+        <OrderContext.Provider value={{ orders, addOrder, updateStatus }}>
             {children}
         </OrderContext.Provider>
     )
