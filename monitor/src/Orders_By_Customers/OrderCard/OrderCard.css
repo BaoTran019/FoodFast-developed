@@ -1,0 +1,50 @@
+.order-card {
+    margin-block: 20px;
+    border-radius: 15px;
+    width: 80%;
+    color: grey;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
+    cursor: pointer;
+}
+
+.show-detail-btn {
+    background:rgba(0, 157, 236, 1) !important;
+    border: 1px solid rgba(0, 170, 255, 1) !important
+}
+.show-detail-btn:active, .show-detail-btn:hover {
+    background:rgba(0, 102, 153, 1) !important;
+}
+
+.order-card.Pending {
+    border-left: 5px solid rgb(218, 0, 218);
+}
+
+.order-card.Processing {
+    border-left: 5px solid rgb(242, 145, 0);
+}
+
+.order-card.Delivering {
+    border-left: 5px solid rgb(70, 133, 231);
+}
+
+.order-card.Completed {
+    border-left: 5px solid rgb(0, 187, 12);
+}
+
+
+.Pending-btn {
+    background-color: rgb(218, 0, 218);
+    border: 1px solid rgb(218, 0, 218);
+}
+
+.Processing-btn {
+    background-color: rgb(242, 145, 0); /*rgb(207, 124, 0)*/
+    border: 1px solid rgb(242, 145, 0);
+}
+
+.Delivering-btn {
+    background-color: rgb(70, 133, 231); /*rgb(0, 75, 187)*/
+    border: 1px solid rgb(70, 133, 231);
+}

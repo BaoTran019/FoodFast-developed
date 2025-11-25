@@ -1,0 +1,21 @@
+services:
+  
+  website:
+    build: ./web
+    image: new-foodfast-web:latest
+    ports:
+      - "5173:80"
+    networks:
+      - app-net
+
+  monitor:
+    build: ./monitor
+    image: new-foodfast-monitor:latest
+    ports:
+      - "5174:80"
+    networks:
+      - app-net
+
+networks:
+  app-net:
+    driver: bridge

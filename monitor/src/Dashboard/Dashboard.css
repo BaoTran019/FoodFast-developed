@@ -1,0 +1,39 @@
+.today-report-zone {
+}
+
+.today-report-card {
+    margin-right: 10px;
+    border-radius: 20px;
+    width: 10%;
+    height: 20vh;
+    padding: 20px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
+}
+.today-report-card h5{
+    font-weight: lighter;
+}
+
+.total-sale {
+    background-color: #b7f9c5;
+}
+
+.total-order {
+    background-color: #c1c3f9;
+    margin-top: 25%;
+}
+
+.line-chart-zone {
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
+}
+
+.orders-list {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
+    overflow: hidden;
+}

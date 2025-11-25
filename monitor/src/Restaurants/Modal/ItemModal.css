@@ -1,0 +1,15 @@
+.modal-dialog {
+  max-width: 900px;   /* giới hạn chiều rộng */
+  width: 90%;         /* co dãn theo viewport */
+  max-height: 80vh;   /* tối đa chiều cao 80% viewport */
+}
+
+.modal-content {
+  padding: 1rem;      /* padding bên trong modal */
+  overflow-y: auto;   /* scroll nếu nội dung quá dài */
+}
+
+.form-label {
+    color: grey;
+    margin-top: 1rem;
+}

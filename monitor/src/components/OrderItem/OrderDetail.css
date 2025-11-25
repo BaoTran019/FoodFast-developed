@@ -1,0 +1,22 @@
+.order-content {
+    border-bottom: 1px solid grey;
+    margin-block: 5px;
+    color: grey;
+}
+
+span.Pending {
+    color: rgb(218, 0, 218);
+    font-weight: bold;
+}
+span.Processing {
+    color: rgb(242, 145, 0);
+    font-weight: bold;
+}
+span.Delivering {
+    color: rgb(70, 133, 231);
+    font-weight: bold;
+}
+span.Completed {
+    color: rgb(0, 187, 12);
+    font-weight: bold;
+}

@@ -1,0 +1,32 @@
+.main-side-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 18%;
+    height: 100%;
+    background-color: white;
+    padding: 50px 30px;
+}
+
+.account-info {
+    text-align: center;
+    border-bottom: 1px solid lightgrey;
+}
+
+.sidebar-btn {
+    width: 100% !important;
+    margin-block: 8px !important;
+    background-color: #ffffff;
+    color: #3961c7;
+    padding-block: 10px !important;
+    padding-left: 15px;
+    text-align: left !important;
+    font-weight: bold;
+    border-radius: 10px !important; /*13*/
+    border: none !important;
+}
+
+.active.sidebar-btn {
+    background-color: #3961c7c2;
+    color: #ffffff;
+}

@@ -1,0 +1,19 @@
+.customer-card {
+    margin-block: 20px;
+    border-radius: 15px;
+    width: 80%;
+    color: grey;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
+    cursor: pointer;
+}
+
+.customer-info-btn {
+    background-color: rgba(19, 190, 104, 1);
+    border: 1px solid rgba(7, 203, 102, 1);
+}
+.customer-info-btn:hover, .customer-info-btn:active {
+    background-color: rgba(6, 135, 71, 1);
+    border: 1px solid rgba(7, 203, 102, 1);
+}
