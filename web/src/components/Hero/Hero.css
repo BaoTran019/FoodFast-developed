@@ -1,0 +1,59 @@
+.hero {
+    width: 100%;
+    background-color: #ff8c09;
+    padding: 50px;
+}
+
+.hero-wrapper {
+    gap: 100px !important;
+}
+
+.hero-subtitle {
+    font-size: x-large;
+    letter-spacing: 2px;
+}
+.hero-title {
+    font-size: 55px;
+    font-weight:700;
+}
+.hero-description {
+    letter-spacing: 1px;
+}
+
+
+.hero-img {
+    height: 400px;
+    width: 100%;            /* -> auto */
+    object-fit: cover;
+}
+
+.hero-btn {
+    background-color: rgb(255, 255, 255);
+    color: #ff8c09;
+    border-color: white !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.hero-btn:hover {
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(255, 255, 255);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.hero-btn:active {
+  background-color: #ffda09 !important;
+  transform: translateY(-3px) !important;
+}
+
+
+
+/* FOR TABLET */
+@media (max-width:992px) {
+    
+}
+
+/* FOR PHONE */
+@media (max-width:480px) {
+
+    .hero-content {
+        text-align: center;
+    }
+}

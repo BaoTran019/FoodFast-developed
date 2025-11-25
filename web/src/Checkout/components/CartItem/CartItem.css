@@ -1,0 +1,14 @@
+.checkout-cart-item {
+    display: flex;
+    align-items: center;
+    margin-block: 0.8em;
+    width:100%;
+    border-bottom:1px solid rgb(219, 219, 219);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+[data-bs-theme="dark"] .checkout-cart-item {
+    background: rgb(55, 55, 55);
+    border-bottom: 1px solid rgb(95, 95, 95) !important;
+}

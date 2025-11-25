@@ -1,0 +1,7 @@
+spaghetti icon : <a href="https://www.flaticon.com/free-icons/pasta" title="pasta icons">Pasta icons created by Freepik - Flaticon</a>
+
+fast-food : <a href="https://www.flaticon.com/free-icons/fast-food" title="fast food icons">Fast food icons created by Freepik - Flaticon</a>
+
+fried-chicken : <a href="https://www.flaticon.com/free-icons/fried-chicken" title="fried chicken icons">Fried chicken icons created by nawicon - Flaticon</a>
+
+soda : <a href="https://www.flaticon.com/free-icons/soda" title="soda icons">Soda icons created by Smashicons - Flaticon</a>

@@ -1,0 +1,42 @@
+/* Footer*/
+footer{
+  background-image: linear-gradient(to bottom, #92f6ffa4, rgba(224, 75, 6, 0.958)),
+    url("../../assets/footer/background.jfif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 50%;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  width: 100%;
+}
+
+.footer-logo{
+  width: auto;
+  height: 130px;
+}
+
+.logan{
+  font-size:60px;
+}
+
+.contact-info{
+  font-size: larger;
+}
+
+.media-icon i{
+  font-size: xx-large;
+}
+.media-icon i:hover{
+  color: yellow;
+}
+
+footer .nav-link {
+  color: rgb(246, 246, 246) !important;
+  font-size: larger;
+}
+footer .nav-link:hover {
+  color: #2cccdb !important;
+}
+
+.contact-info .bi:hover {
+  color: yellow !important;
+}

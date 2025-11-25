@@ -1,0 +1,71 @@
+.fade-in-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  animation: fadeInLeft 0.7s ease-out forwards;
+}
+
+@keyframes fadeInLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+[data-bs-theme="dark"] h2{
+    color : #f63f16 !important;
+}
+
+.menu-filter {
+    display: flex;
+    gap: 7vw;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap
+}
+
+.filter-button h4 {
+    font-weight: 500;
+    color: #ff8c09;
+    margin-top: 15px;
+}
+
+.filter-icon {
+    height: 18vh;
+    width: auto;
+    background-color: #ffca09b9;
+    border-radius: 50rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 5px 5px 10px grey;
+}
+.filter-icon:hover{
+    transform: translateY(-7px);
+    box-shadow: 0 8px 15px rgba(255, 187, 0, 0.74);
+    transition: all 0.3s ease;
+}
+
+[data-bs-theme="dark"] .filter-icon {
+    background-color: #ffce09e1;
+}
+
+.menu-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* FOR TABLET */
+@media (max-width: 992px){
+    .filter-icon {
+        width: 20vw;
+        height: auto;
+    }
+}
+
+@media (max-width: 448px){
+    .filter-button {
+        width: 40%;
+    }
+}

@@ -1,0 +1,81 @@
+.navbar {
+    /*background-color: #ff9b29;*/
+    position: fixed;
+    z-index: 1000;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.img-logo {
+    width: 200px;
+}
+
+.nav-link {
+    color: rgb(95, 95, 95) !important;
+}
+
+[data-bs-theme="dark"] .nav-link {
+    color: #ff8c09 !important;
+}
+
+.nav-link:hover {
+    color: #ff8c09 !important;
+}
+
+[data-bs-theme="dark"] .nav-link:hover {
+    color: rgb(225, 225, 225) !important;
+}
+
+.main-menu .nav-link {
+    font-size: 20px !important;
+}
+
+.user-menu .nav-link {
+    font-size: 30px !important;
+}
+
+
+.navbar-toggler-icon {
+    color: black;
+}
+
+/*---------------------------------------------------------------------*/
+
+/* FOR TABLET*/
+@media (max-width: 992px) {
+    .nav-item {
+        padding-left: 15px;
+    }
+
+    .nav-link {
+        font-size: 20px !important;
+    }
+
+    .user-menu {
+        margin-left: 1rem !important;
+        display: flex !important;
+        /* flex container */
+        flex-direction: row !important;
+        /* hàng ngang */
+        justify-content: flex-start;
+        /* căn trái (hoặc flex-end nếu muốn sang phải) */
+        gap: 0.5rem;
+        /* khoảng cách giữa các icon */
+    }
+
+    .user-menu .nav-item {
+        margin-right: 0 !important;
+        /* bỏ margin mặc định nếu cần */
+    }
+}
+
+/* FOR PHONE */
+@media (max-width: 480px) {
+
+    .logo-title {
+        font-size: larger;
+    }
+
+    .nav-link {
+        font-size: 18px !important;
+    }
+}

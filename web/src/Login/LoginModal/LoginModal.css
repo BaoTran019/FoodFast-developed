@@ -1,0 +1,17 @@
+.login-tabs {
+  font-size: 1rem;
+}
+
+.login-tabs span {
+  cursor: pointer;
+}
+
+.login-tabs .text-muted:hover {
+  color: #ff6600;
+}
+.login-logo {
+  width: 300px;   
+  height: auto; 
+  object-fit: contain;
+}
+

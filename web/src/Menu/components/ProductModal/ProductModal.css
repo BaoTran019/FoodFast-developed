@@ -1,0 +1,76 @@
+.modal-content {
+  scrollbar-width: none;
+  /* Firefox */
+  background-color: #fee6ca;
+}
+
+.modal-content::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari */
+}
+
+.modal-infomation {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-right: 3%;
+}
+
+/*To ignore the Modal default padding for scrollbar*/
+body.modal-open {
+  padding-right: 0 !important;
+}
+
+body.modal-open .navbar {
+  padding-right: 0 !important;
+}
+
+.productModal-img {
+  width: 100%;
+  height: auto;
+}
+
+
+/*Right to Left fade-in animation*/
+.modal.fade .modal-dialog {
+  transform: translate(50px, 0);
+  transition: transform .3s ease-out;
+}
+
+.modal.show .modal-dialog {
+  transform: translate(0, 0);
+}
+
+.set-quantity-zone {
+  gap: 0.3vw;
+}
+
+.quantity-txtbox {
+  width: 10%;
+}
+
+/* FOR TABLE */
+@media (max-width: 992px) {
+  .modal-dialog {
+    width: 80%;
+    margin: auto;
+  }
+
+  .price-label {
+    font-size: 1.1rem !important;
+  }
+
+  .item-price {
+    font-size: 1.4rem !important;
+  }
+
+  .modal-title {
+    font-size: 1.3rem !important;
+  }
+
+  .set-quantity-zone {
+    gap: 3vw;
+  }
+  .quantity-txtbox {
+  width: 100%;
+}
+}

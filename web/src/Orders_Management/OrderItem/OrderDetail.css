@@ -1,0 +1,15 @@
+.order-content {
+    border-bottom: 1px solid grey;
+    margin-block: 5px;
+    color: grey;
+}
+
+span.pending {
+    color: rgb(218, 0, 218);
+}
+span.processing {
+    color: rgb(242, 145, 0);
+}
+span.delivered {
+    color: rgb(0, 187, 12);
+}

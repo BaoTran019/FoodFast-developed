@@ -1,0 +1,89 @@
+.checkout-form {
+    border-radius: 30px;
+    padding: 2em;
+    background: white;
+}
+[data-bs-theme="dark"] .checkout-form {
+    background: rgb(47, 47, 47);
+}
+
+.form-group {
+    border: 1px solid rgb(216, 216, 216) !important;
+    padding: 1em;
+    border-radius: 15px;
+}
+[data-bs-theme="dark"] .form-group {
+    background: rgb(55, 55, 55);
+    border: 1px solid rgb(95, 95, 95) !important;
+}
+.form-group-label {
+    font-size: x-large;
+    color: #ff8c09;
+}
+
+.form-label {
+    font-size: small;
+    margin-block: 0.8em;
+}
+
+.form-control {
+    border: none;
+    border-bottom: 1px solid lightgrey;
+    font-size: smaller;
+}
+[data-bs-theme="dark"] .form-control {
+    border-bottom: 1px solid rgb(120, 120, 120);
+}
+
+.form-check-input:active, .form-check-input:checked {
+    background-color: #ff8c09;
+    border: 1px solid #ff8c09;
+}
+
+.checkout-method-label {
+    font-size: medium;
+    margin-block: 0 !important;
+}
+
+.confirm-section {
+    border: none !important;
+}
+.confirm-section .btn {
+    border: none;
+    width: 12rem;
+    margin-block: 10px;
+    margin-inline: 5px;
+    padding-block: 9px;
+}
+
+.return-to-cart-btn {
+    background-color: #ffa620;
+}
+.return-to-cart-btn:hover, .return-to-cart-btn:active {
+    background: #ffda09 !important;
+}
+
+.checkout-btn {
+  background: forestgreen !important;
+}
+.checkout-btn:hover{
+  background: rgb(43, 174, 43) !important;
+}
+.checkout-btn:active{
+  background: rgb(55, 233, 55) !important;
+}
+
+
+/* FOR TABLET */
+@media (max-width:992px) {
+    .form-group-label {
+        font-size: larger;
+    }
+}
+
+/* FOR MOBILE */
+@media (max-width:448px) {
+    .form-group-label {
+        font-size: large;
+    }
+}
