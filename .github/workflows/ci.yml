@@ -11,11 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Tạo Firebase config cho Web
-      - name: Create Firebase config file for Web
+      # Tạo firebase-keys.js và firebase-config.js cho Web
+      - name: Create Firebase key & config files for Web
         run: |
-          cat << 'EOF' > ./web/js/firebase-config.js
-          export const firebaseConfig = {
+          # firebase-keys.js
+          cat << 'EOF' > ./web/js/firebase-keys.js
+          export const firebaseKeys = {
             apiKey: "${{ secrets.FIREBASE_API_KEY }}",
             authDomain: "${{ secrets.FIREBASE_AUTH_DOMAIN }}",
             projectId: "${{ secrets.FIREBASE_PROJECT_ID }}",
@@ -25,9 +26,21 @@ jobs:
           };
           EOF
 
+          # firebase-config.js
+          cat << 'EOF' > ./web/js/firebase-config.js
+          import { initializeApp } from "firebase/app";
+          import { getAuth } from "firebase/auth";
+          import { getFirestore } from "firebase/firestore";
+          import { firebaseKeys } from "./firebase-keys";
+
+          const app = initializeApp(firebaseKeys);
+          export const auth = getAuth(app);
+          export const db = getFirestore(app);
+          EOF
+
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
 
       - run: npm install
         working-directory: ./web
@@ -41,11 +54,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Tạo Firebase config cho Admin
-      - name: Create Firebase config file for Admin
+      # Tạo firebase-keys.js và firebase-config.js cho Admin
+      - name: Create Firebase key & config files for Admin
         run: |
-          cat << 'EOF' > ./monitor/js/firebase-config.js
-          export const firebaseConfig = {
+          # firebase-keys.js
+          cat << 'EOF' > ./monitor/js/firebase-keys.js
+          export const firebaseKeys = {
             apiKey: "${{ secrets.FIREBASE_API_KEY }}",
             authDomain: "${{ secrets.FIREBASE_AUTH_DOMAIN }}",
             projectId: "${{ secrets.FIREBASE_PROJECT_ID }}",
@@ -55,9 +69,21 @@ jobs:
           };
           EOF
 
+          # firebase-config.js
+          cat << 'EOF' > ./monitor/js/firebase-config.js
+          import { initializeApp } from "firebase/app";
+          import { getAuth } from "firebase/auth";
+          import { getFirestore } from "firebase/firestore";
+          import { firebaseKeys } from "./firebase-keys";
+
+          const app = initializeApp(firebaseKeys);
+          export const auth = getAuth(app);
+          export const db = getFirestore(app);
+          EOF
+
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
 
       - run: npm install
         working-directory: ./monitor
