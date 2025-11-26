@@ -14,7 +14,7 @@ jobs:
       # Tạo Firebase config cho Web
       - name: Create Firebase config file for Web
         run: |
-          cat << 'EOF' > ./web/js/config-firebase.js
+          cat << 'EOF' > ./web/js/firebase-config.js
           export const firebaseConfig = {
             apiKey: "${{ secrets.FIREBASE_API_KEY }}",
             authDomain: "${{ secrets.FIREBASE_AUTH_DOMAIN }}",
@@ -44,7 +44,7 @@ jobs:
       # Tạo Firebase config cho Admin
       - name: Create Firebase config file for Admin
         run: |
-          cat << 'EOF' > ./monitor/js/config-firebase.js
+          cat << 'EOF' > ./monitor/js/firebase-config.js
           export const firebaseConfig = {
             apiKey: "${{ secrets.FIREBASE_API_KEY }}",
             authDomain: "${{ secrets.FIREBASE_AUTH_DOMAIN }}",
