@@ -36,38 +36,40 @@ function CartProvider({ children }) {
   }, [userId]);
 
   const addToCart = async (restaurant, product) => {
-    if (!currentUser) return;
-    const uid = currentUser.uid;
+  if (!currentUser) return;
 
-    // Check restaurantId
-    if (cart.cartItems.length > 0) {
-      const existingRestaurantId = cart.cartItems[0].restaurantId;
-      if (existingRestaurantId !== restaurant.id) {
-        toast.error("Giỏ hàng chỉ có thể chứa món từ 1 nhà hàng. Vui lòng thanh toán hoặc xóa giỏ trước khi thêm món mới.");
-        return;
-      }
+  // Check chỉ 1 nhà hàng trong giỏ
+  if (cart.cartItems.length > 0) {
+    const existingRestaurantId = cart.cartItems[0].restaurantId;
+    if (existingRestaurantId !== restaurant.id) {
+      toast.error('Giỏ hàng chỉ có thể chứa món từ 1 nhà hàng.');
+      return;
     }
+  }
 
-    // Gọi Firestore (đã có trong get-cart.js)
-    await addToCartFirestore(uid, product, restaurant.id, restaurant.name);
+  try {
+    // Thêm vào Firestore
+    await addToCartFirestore(currentUser.uid, product, restaurant.id, restaurant.name);
 
-    // Update state local
-    setCart(prev => {
-      const exist = prev.cartItems.find(i => i.id === product.id);
-      let newCartItems;
-      if (exist) {
-        newCartItems = prev.cartItems.map(i =>
-          i.id === product.id ? { ...i, quantity: i.quantity + 1 } : i
-        );
-      } else {
-        newCartItems = [...prev.cartItems, { ...product, quantity: 1 }];
-      }
-      const newTotal = newCartItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
-      return { cartItems: newCartItems, totalPrice: newTotal, restaurantName: restaurant.name };
+    // Fetch lại giỏ hàng từ Firestore để đồng bộ đầy đủ
+    const data = await fetchCartItems(currentUser.uid);
+    const restaurantId = data[0]?.restaurantId || "";
+    const restaurantName = data[0]?.restaurantName || "";
+    const totalPrice = data.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+    setCart({
+      cartItems: data,
+      totalPrice,
+      restaurantId,
+      restaurantName
     });
 
-    toast.success(`Đã thêm món ${product.name} vào giỏ`)
-  };
+    toast.success(`Đã thêm món ${product.name} vào giỏ`);
+  } catch (err) {
+    console.error("Lỗi thêm món vào giỏ:", err);
+    toast.error("Không thêm được món vào giỏ");
+  }
+};
 
   const updateQty = async (productId, delta) => {
     if (!currentUser) return;
