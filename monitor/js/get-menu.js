@@ -50,8 +50,8 @@ export const updateMenuItemAvailability = async (restaurantId, menuItemId, isAva
 
 export const updateMenuItemInfo = async (restaurantId, menuItemId, editted_info) => {
     try {
-        if (!info || Object.keys(editted_info).length === 0) {
-            console.error("updateMenuItemInfo: info cannot be empty");
+        if (!editted_info || Object.keys(editted_info).length === 0) {
+            console.warning("updateMenuItemInfo: info cannot be empty");
             return false;
         }
         const menuInfoRef = doc(db, "restaurants", restaurantId, "menuItems", menuItemId);

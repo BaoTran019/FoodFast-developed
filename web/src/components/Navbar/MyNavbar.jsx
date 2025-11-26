@@ -31,7 +31,7 @@ function MyNavbar({ darkMode, setDarkMode }) {
   const navigate = useNavigate()
 
   const handleManageOrder = () => {
-    if (currentUser.uid !== '') {
+    if (currentUser?.uid) {
       navigate('/orders')
       window.scrollTo(0, 0)
     }
@@ -40,7 +40,7 @@ function MyNavbar({ darkMode, setDarkMode }) {
     }
   }
   const handleOpenCartPage = () => {
-    if (currentUser.userId !== '') {
+    if (currentUser?.uid) {
       navigate('/cart')
       window.scrollTo(0, 0)
     }

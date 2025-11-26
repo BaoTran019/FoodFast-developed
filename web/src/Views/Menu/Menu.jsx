@@ -7,6 +7,7 @@ import { CartContext } from '../../context/CartContext';
 import { toast } from 'react-toastify';
 import temp_img from '../../assets/footer/background.jfif'
 import './Menu.css'
+import { AuthenContext } from '../../context/AuthContext';
 
 function Menu() {
     const { restaurantId } = useParams();
@@ -14,6 +15,7 @@ function Menu() {
     const [menu, setMenu] = useState([]);
     const { addToCart } = useContext(CartContext)
     const [loading, setLoading] = useState(true); // state loading
+    const { currentUser } = useContext(AuthenContext)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,6 +35,10 @@ function Menu() {
     }, [restaurantId]);
 
     const HandleAddToCart = async (product) => {
+        if(!currentUser?.uid) {
+            toast.error('Hãy đăng nhập tài khoản trước nhé')
+            return
+        }
         try {
             await addToCart(restaurant, product)
         } catch (err) {
