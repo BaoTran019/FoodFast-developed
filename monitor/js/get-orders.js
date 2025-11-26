@@ -18,6 +18,21 @@ export const fetchOrders = async (uid) => {
     }
 }
 
+export const fetchAllOrders = async () => {
+  try {
+    const colRef = collection(db, "orders");
+    const snapshot = await getDocs(colRef);
+
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+  } catch (error) {
+    console.log("Error fetching all orders: ", error);
+    return [];
+  }
+};
+
 export const updateOrderStatus = async (orderId, status) => {
   try {
     const orderRef = doc(db, "orders", orderId); // tham chiếu đến document

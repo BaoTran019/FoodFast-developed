@@ -9,11 +9,12 @@ export const createOrder = async (uid, initial_order, cart) => {
             restaurantId: cart.cartItems[0].restaurantId,
             restaurantName: cart.cartItems[0].restaurantName,
             items: cart.cartItems,
-            total: initial_order.total,
+            totalPrice: initial_order.totalPrice,
             payment_method: initial_order.payment_method,
             shipping_address: initial_order.shipping_address,
             recipientName: initial_order.recipientName,
             recipientPhone: initial_order.recipientPhone,
+            status: initial_order.status,
             createdAt: serverTimestamp()
         });
         console.log('Order ID:', orderDoc.id);

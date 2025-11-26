@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { fetchOrders, updateOrderStatus } from "../../js/get-orders";
+import { fetchOrders, updateOrderStatus, fetchAllOrders } from "../../js/get-orders";
 
 import { AuthContext } from "./AuthenticationContext";
 
@@ -16,7 +16,7 @@ const OrdersProvider = ({ children }) => {
     useEffect(() => {
         const loadOrders = async () => {
             try {
-                const data = await fetchOrders(uid)
+                const data = await fetchAllOrders(uid)
                 setOrders(data)
             } catch (err) {
                 console.error(err)

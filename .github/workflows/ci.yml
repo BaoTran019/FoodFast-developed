@@ -7,24 +7,60 @@ on:
 jobs:
   build-web:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
+
+      # Tạo Firebase config cho Web
+      - name: Create Firebase config file for Web
+        run: |
+          cat << 'EOF' > ./web/js/config-firebase.js
+          export const firebaseConfig = {
+            apiKey: "${{ secrets.FIREBASE_API_KEY }}",
+            authDomain: "${{ secrets.FIREBASE_AUTH_DOMAIN }}",
+            projectId: "${{ secrets.FIREBASE_PROJECT_ID }}",
+            storageBucket: "${{ secrets.FIREBASE_STORAGE_BUCKET }}",
+            messagingSenderId: "${{ secrets.FIREBASE_MESSAGING_ID }}",
+            appId: "${{ secrets.FIREBASE_APP_ID }}"
+          };
+          EOF
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+
       - run: npm install
         working-directory: ./web
+
       - run: npm run build
         working-directory: ./web
 
   build-admin:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
+
+      # Tạo Firebase config cho Admin
+      - name: Create Firebase config file for Admin
+        run: |
+          cat << 'EOF' > ./monitor/js/config-firebase.js
+          export const firebaseConfig = {
+            apiKey: "${{ secrets.FIREBASE_API_KEY }}",
+            authDomain: "${{ secrets.FIREBASE_AUTH_DOMAIN }}",
+            projectId: "${{ secrets.FIREBASE_PROJECT_ID }}",
+            storageBucket: "${{ secrets.FIREBASE_STORAGE_BUCKET }}",
+            messagingSenderId: "${{ secrets.FIREBASE_MESSAGING_ID }}",
+            appId: "${{ secrets.FIREBASE_APP_ID }}"
+          };
+          EOF
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+
       - run: npm install
         working-directory: ./monitor
+
       - run: npm run build
         working-directory: ./monitor

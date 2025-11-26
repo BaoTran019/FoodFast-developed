@@ -20,8 +20,8 @@ function OrdersTable() {
                 </thead>
                 <tbody>
                     {order.map((order) => (
-                        <tr key={order.orderId}>
-                            <td>{order.orderId}</td>
+                        <tr key={order.id}>
+                            <td>{order.id}</td>
                             <td>{order.recipientName}</td>
                             <td>{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(order.totalPrice)}</td>
                             <td className={`${order.status}`}>

@@ -43,7 +43,7 @@ function CheckoutPage() {
   }, [cart.cartItems]);
 
   if (cart.cartItems.length === 0) {
-    return <Navigate to="/restaurant" replace />; // chuyển hướng về trang menu
+    return <Navigate to="/restaurants" replace />; // chuyển hướng về trang menu
   }
 
   const handleAddOrder = async (e) => {

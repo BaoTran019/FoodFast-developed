@@ -66,7 +66,6 @@ export const createRestaurant = async (restaurantData) => {
     const docRef = await addDoc(colRef, {
       ...restaurantData,
       active: true,        // mặc định mới tạo là active
-      createdAt: new Date() // ngày tạo
     });
     console.log(`Restaurant created with ID: ${docRef.id}`);
     return { id: docRef.id, ...restaurantData };

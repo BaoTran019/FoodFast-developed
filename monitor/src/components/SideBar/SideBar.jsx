@@ -29,7 +29,6 @@ function SideBar() {
     { id: "/", label: "Dashboard", active_icon: DashBoardIcon, unactive_icon: DashBoardIcon_u },
     { id: "Orders", label: "Orders", active_icon: OrderIcon, unactive_icon: OrderIcon_u },
     { id: "Restaurants", label: "Restaurants", active_icon: MenuIcon, unactive_icon: MenuIcon_u },
-    { id: "Menu", label: "Menu", active_icon: MenuIcon, unactive_icon: MenuIcon_u },
     { id: "Customers", label: "Customers", active_icon: CustomerIcon, unactive_icon: CustomerIcon_u },
   ];
 
