@@ -10,6 +10,7 @@ import Restaurant from './Restaurants/Restaurant';
 import { AuthContext } from './contexts/AuthenticationContext';
 import LoginModal from './Login/LoginModal/LoginModal';
 import { ToastContainer } from "react-toastify";
+import DroneManagement from './DroneManagement/DroneManagement';
 import './App.css'
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
         <Route path='/Menu/:restaurantId' element={<PrivateRoute><MenuManage_page /></PrivateRoute>}></Route>
         <Route path='/Customers' element={<PrivateRoute><Customers /></PrivateRoute>}></Route>
         <Route path="/orders_by_customers/:uid" element={<PrivateRoute><Orders_By_Customers /></PrivateRoute>}></Route>
+        <Route path="/Drone" element={<PrivateRoute><DroneManagement /></PrivateRoute>}></Route>
       </Routes>
 
 

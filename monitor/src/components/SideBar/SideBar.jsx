@@ -30,6 +30,7 @@ function SideBar() {
     { id: "Orders", label: "Orders", active_icon: OrderIcon, unactive_icon: OrderIcon_u },
     { id: "Restaurants", label: "Restaurants", active_icon: MenuIcon, unactive_icon: MenuIcon_u },
     { id: "Customers", label: "Customers", active_icon: CustomerIcon, unactive_icon: CustomerIcon_u },
+    { id: "Drone", label: "Drone", active_icon: CustomerIcon, unactive_icon: CustomerIcon_u }
   ];
 
   return (
