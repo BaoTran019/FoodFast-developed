@@ -30,7 +30,7 @@ const OrderProvider = ({ children }) => {
     const addOrder = async (initial_order) => {
         try {
             console.log(cart)
-            await createOrder(uid, initial_order, cart)
+            await createOrder(uid, initial_order)
         }
         catch (err) {
             console.log('Lỗi tạo đơn hàng');
