@@ -1,133 +1,119 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { NavLink, Navigate, useNavigate } from 'react-router-dom';
-import { CartContext } from '../context/CartContext'
-import { Form, Row, Col, Button } from 'react-bootstrap'
-import { toast } from "react-toastify";
-import CartItem from './components/CartItem/CartItem';
-import './CheckoutPage.css'
-import vnpayLogo from '../assets/checkout/vnpay.jpg'
-import cash from '../assets/checkout/money.png'
+import React, { useContext, useEffect, useState } from 'react';
+import { NavLink, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { CartContext } from '../context/CartContext';
 import { OrderContext } from '../context/OrderContext';
 import { UserContext } from '../context/UserContext';
+import { Form, Row, Col, Button } from 'react-bootstrap';
+import { toast } from "react-toastify";
+import CartItem from './components/CartItem/CartItem';
+import './CheckoutPage.css';
+import vnpayLogo from '../assets/checkout/vnpay.jpg';
+import cash from '../assets/checkout/money.png';
 
 function CheckoutPage() {
-  const { cart, clearCart } = useContext(CartContext);
-  const { addOrder } = useContext(OrderContext)
-  const { user } = useContext(UserContext)
-  const restaurantName = cart.cartItems[0]?.restaurantName
+  const { removeItem } = useContext(CartContext);
+  const { addOrder } = useContext(OrderContext);
+  const { user } = useContext(UserContext);
 
-  // Get Total
-  const total = cart.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const [init_order, setInitOrder] = useState({
-    customer: user.name, phone: user.phone,
-    address: user.address, total: total, payment_method: ''
-  })
-  const [initial_order, setInitialOrder] = useState({
-    recipientName: user.name,
-    recipientPhone: user.phone,
-    shipping_address: user.address,
-    payment_method: 'COD',
-    restaurantId: cart.cartItems[0]?.restaurantId,
-    restaurantName: cart.cartItems[0]?.restaurantName,
-    status:'pending',
-    totalPrice: total
-  })
+  // Nhận dữ liệu từ CartPage
+  const { restaurantId, restaurantName, items } = location.state || {};
 
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (cart.cartItems.length === 0) {
-      toast.warning("Giỏ hàng chưa có sản phẩm để thanh toán");
-    }
-  }, [cart.cartItems]);
-
-  if (cart.cartItems.length === 0) {
-    return <Navigate to="/restaurants" replace />; // chuyển hướng về trang menu
+  if (!items || items.length === 0) {
+    toast.warning("Không có món nào để thanh toán");
+    return <Navigate to="/restaurants" replace />;
   }
+
+  // Tính tổng theo items nhận được
+  const total = items.reduce((sum, item) => sum + (item.price || 0) * item.quantity, 0);
+
+  // State thông tin người nhận và order
+  const [initialOrder, setInitialOrder] = useState({
+    recipientName: user.name || '',
+    recipientPhone: user.phone || '',
+    shipping_address: user.address || '',
+    payment_method: 'COD',
+    restaurantId: restaurantId || '',
+    restaurantName: restaurantName || '',
+    status: 'pending',
+    totalPrice: total,
+    items: items || []
+  });
+
+  // Update total khi items thay đổi
+  useEffect(() => {
+    setInitialOrder(prev => ({ ...prev, totalPrice: total }));
+  }, [total]);
 
   const handleAddOrder = async (e) => {
     e.preventDefault();
     try {
-      await addOrder(initial_order)
-      await clearCart()
-      toast.success("Đặt hàng thành công")
-      navigate('/restaurants')
+      await addOrder(initialOrder);
+      for (const item of items) {
+        await removeItem(item.id);
+      }
+      toast.success("Đặt hàng thành công");
+      navigate('/restaurants');
+    } catch (err) {
+      toast.error("Có lỗi xảy ra khi đặt hàng");
+      console.error(err);
     }
-    catch (err) {
-      toast.warning("Lỗi")
-      throw new Error(err)
-    }
-  }
-
-  console.log('initial order', initial_order)
+  };
 
   return (
     <div style={{ paddingBlock: '16vh', marginInline: 'auto', width: '100%' }}>
       <Row style={{ paddingRight: '0' }}>
-
         {/* CHECKOUT INFORMATION */}
         <Col md={8}>
-          <Form className='checkout-form' onSubmit={(e) => handleAddOrder(e)}>
+          <Form className='checkout-form' onSubmit={handleAddOrder}>
             <Row>
               <Col md={6} xs={12} className="mb-3">
-                {/*Customer information */}
                 <Form.Group className='form-group'>
-                  <div className='form-group-label'>
-                    Thông tin người nhận hàng
-                  </div>
-                  <Form.Label>
-                    Họ và tên <span style={{ color: 'red', fontSize: 'smaller' }}>(Bắt buộc)</span>
-                  </Form.Label>
-                  <Form.Control className='form-control' type='text' placeholder='Nhập họ và tên người nhận'
-                    value={initial_order.recipientName} required
-                    onChange={(e) => setInitialOrder({ ...initial_order, recipientName: e.target.value })} />
+                  <div className='form-group-label'>Thông tin người nhận hàng</div>
+                  <Form.Label>Họ và tên <span style={{ color: 'red', fontSize: 'smaller' }}>(Bắt buộc)</span></Form.Label>
+                  <Form.Control type='text' required
+                    value={initialOrder.recipientName}
+                    onChange={(e) => setInitialOrder({ ...initialOrder, recipientName: e.target.value })}
+                  />
 
-                  <Form.Label>
-                    Số điện thoại <span style={{ color: 'red', fontSize: 'smaller' }}>(Bắt buộc)</span>
-                  </Form.Label>
-                  <Form.Control className='form-control' type='tel'
-                    placeholder='Nhập số điện thoại người nhận' pattern="^0[0-9]{9}$"
-                    value={initial_order.recipientPhone} required
-                    onChange={(e) => setInitialOrder({ ...initial_order, recipientPhone: e.target.value })} />
+                  <Form.Label>Số điện thoại <span style={{ color: 'red', fontSize: 'smaller' }}>(Bắt buộc)</span></Form.Label>
+                  <Form.Control type='tel' required pattern="^0[0-9]{9}$"
+                    value={initialOrder.recipientPhone}
+                    onChange={(e) => setInitialOrder({ ...initialOrder, recipientPhone: e.target.value })}
+                  />
 
-                  <Form.Label>
-                    Địa chỉ nhận hàng <span style={{ color: 'red', fontSize: 'smaller' }}>(Bắt buộc)</span>
-                  </Form.Label>
-                  <Form.Control className='form-control' type='text' placeholder='Nhập địa chỉ nhận hàng'
-                    value={initial_order.shipping_address} required
-                    onChange={(e) => setInitialOrder({ ...initial_order, shipping_address: e.target.value })} />
+                  <Form.Label>Địa chỉ nhận hàng <span style={{ color: 'red', fontSize: 'smaller' }}>(Bắt buộc)</span></Form.Label>
+                  <Form.Control type='text' required
+                    value={initialOrder.shipping_address}
+                    onChange={(e) => setInitialOrder({ ...initialOrder, shipping_address: e.target.value })}
+                  />
 
-                  <Form.Label>
-                    Ghi chú
-                  </Form.Label>
-                  <Form.Control className='form-control' type='textarea' placeholder='Nhập ghi chú' />
+                  <Form.Label>Ghi chú</Form.Label>
+                  <Form.Control type='textarea' placeholder='Nhập ghi chú' />
                 </Form.Group>
               </Col>
 
               <Col md={6} xs={12}>
-                {/*Checkout Method */}
                 <Form.Group className='form-group mb-3'>
-                  <div className='form-group-label'>
-                    Phương thức thanh toán
-                  </div>
+                  <div className='form-group-label'>Phương thức thanh toán</div>
                   <div style={{ marginBlock: '1em', display: 'flex', gap: '1em', alignItems: 'center' }}>
-                    <Form.Check type='radio' name="paymentMethod" id="payment-cod"
-                      required
-                      value={"COD"}
-                      onChange={(e) => setInitialOrder({ ...initial_order, payment_method: e.target.value })} />
-                    <Form.Label className='checkout-method-label'><img src={cash} style={{ height: '40px', marginRight: '0.8em' }}></img>Tiền mặt</Form.Label>
+                    <Form.Check type='radio' name="paymentMethod" value="COD" required
+                      checked={initialOrder.payment_method === 'COD'}
+                      onChange={(e) => setInitialOrder({ ...initialOrder, payment_method: e.target.value })}
+                    />
+                    <Form.Label className='checkout-method-label'><img src={cash} style={{ height: '40px', marginRight: '0.8em' }} />Tiền mặt</Form.Label>
                   </div>
                   <div style={{ display: 'flex', gap: '1em', alignItems: 'center' }}>
-                    <Form.Check type='radio' name="paymentMethod" id="payment-online"
-                      required
-                      value={"VNPAY"}
-                      onChange={(e) => setInitialOrder({ ...initial_order, payment_method: e.target.value })} />
-                    <Form.Label className='checkout-method-label'><img src={vnpayLogo} style={{ height: '40px', marginRight: '0.8em' }}></img>VNPay</Form.Label>
+                    <Form.Check type='radio' name="paymentMethod" value="VNPAY" required
+                      checked={initialOrder.payment_method === 'VNPAY'}
+                      onChange={(e) => setInitialOrder({ ...initialOrder, payment_method: e.target.value })}
+                    />
+                    <Form.Label className='checkout-method-label'><img src={vnpayLogo} style={{ height: '40px', marginRight: '0.8em' }} />VNPay</Form.Label>
                   </div>
                 </Form.Group>
 
-                {/*Corfirm section*/}
                 <Form.Group className='confirm-section' style={{ textAlign: 'center' }}>
                   <Button className='return-to-cart-btn' as={NavLink} to="/cart">Quay lại giỏ hàng</Button>
                   <Button className='checkout-btn' type='submit'>Hoàn tất đơn hàng</Button>
@@ -137,24 +123,24 @@ function CheckoutPage() {
           </Form>
         </Col>
 
-        {/*CART LIST FOR CHECKOUT*/}
+        {/* CART LIST FOR CHECKOUT */}
         <Col className='checkout-form' style={{ padding: '1em', borderRadius: '30px' }}>
           <div className='checkout-form'>
             <h3>Nhà hàng: <span style={{ color: '#ff8c09' }}>{restaurantName}</span></h3>
-            <p style={{ fontSize: 'larger', borderBottom: '1px solid grey', paddingBottom: '1em' }}>Tổng cộng: {" "}
-              <span style={{ fontSize: 'x-large', fontWeight: 'bold', color: '#ff8c09' }}>
+            <p style={{ fontSize: 'larger', borderBottom: '1px solid grey', paddingBottom: '1em' }}>
+              Tổng cộng: <span style={{ fontSize: 'x-large', fontWeight: 'bold', color: '#ff8c09' }}>
                 {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(total)}
               </span>
             </p>
 
-            {cart.cartItems.map((food) => (
-              <CartItem key={food.id} item={food}></CartItem>
+            {items.map((food) => (
+              <CartItem key={food.id} item={food} />
             ))}
           </div>
         </Col>
       </Row>
-    </div >
+    </div>
   )
 }
 
-export default CheckoutPage
+export default CheckoutPage;

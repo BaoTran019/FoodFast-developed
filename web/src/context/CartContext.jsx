@@ -38,15 +38,6 @@ function CartProvider({ children }) {
   const addToCart = async (restaurant, product) => {
   if (!currentUser) return;
 
-  // Check chỉ 1 nhà hàng trong giỏ
-  if (cart.cartItems.length > 0) {
-    const existingRestaurantId = cart.cartItems[0].restaurantId;
-    if (existingRestaurantId !== restaurant.id) {
-      toast.error('Giỏ hàng chỉ có thể chứa món từ 1 nhà hàng.');
-      return;
-    }
-  }
-
   try {
     // Thêm vào Firestore
     await addToCartFirestore(currentUser.uid, product, restaurant.id, restaurant.name);

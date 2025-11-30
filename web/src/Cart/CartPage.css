@@ -15,10 +15,7 @@
   background: rgba(255, 255, 255, 0.95);
   border-radius: 16px;
   padding: 30px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-}
-[data-bs-theme="dark"] .cart-container {
-  background: rgb(47, 47, 47);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .cart-title {
@@ -28,120 +25,204 @@
   font-weight: bold;
 }
 
-.cart-address {
-  font-size: 16px;
-  margin-bottom: 20px;
-}
-
-.cart-address span {
-  color: #e65c00;
-  font-weight: 600;
-}
-
 .cart-items {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
+}
+
+.cart-restaurant-block {
+  border: 1px solid #ffd699;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.restaurant-header {
+  background: #fff5e6;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.restaurant-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #ff6600;
+}
+
+.restaurant-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.toggle-btn {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.restaurant-items {
+  padding: 10px 16px;
+  background: #fffaf0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .cart-item {
   display: flex;
   align-items: center;
   background: #f8f8f8;
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-[data-bs-theme="dark"] .cart-item {
-  background: rgb(55, 55, 55)
+  border-radius: 10px;
+  padding: 10px;
+  gap: 12px;
 }
 
 .cart-img {
-  width: 100px;
-  height: 80px;
+  width: 80px;
+  height: 60px;
   object-fit: cover;
-  border-radius: 8px;
-  margin-right: 15px;
+  border-radius: 6px;
 }
 
 .cart-info {
   flex: 1;
 }
 
+.item-name {
+  margin: 0;
+  font-weight: bold;
+  color: #ff6600;
+}
+
+.item-price {
+  margin: 4px 0;
+}
+
 .qty-controls {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  margin: 4px 0;
 }
 
 .qty-controls button {
   background: #ff9800;
   border: none;
-  padding: 5px 10px;
+  padding: 4px 8px;
   color: white;
   border-radius: 6px;
   cursor: pointer;
 }
+
 .qty-controls button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-
-.cart-subtotal {
-  font-weight: bold;
-  min-width: 110px;
-  text-align: right;
-}
-
-.cart-summary {
-  margin-top: 30px;
-  text-align: right;
-}
-
-.cart-summary .btn {
-  background: #ffa620;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 10px;
-  font-size: 18px;
-  cursor: pointer;
-  margin-left: 1.5rem;
-  margin-top: 0.8rem;
-}
-
-.cart-summary .btn:hover {
-  background: #ffda09;
-}
-
-.cart-summary__btn-checkout {
-  background: forestgreen !important;
-}
-.cart-summary__btn-checkout:hover{
-  background: rgb(43, 174, 43) !important;
-}
-.cart-summary__btn-checkout:active{
-  background: rgb(55, 233, 55) !important;
 }
 
 .remove-btn {
   background: #b42100;
   color: white;
   border: none;
-  padding: 5px 10px;
+  padding: 4px 8px;
   border-radius: 6px;
   cursor: pointer;
-  margin-top: 0.3rem;
+  margin-top: 4px;
 }
 
-.cart-summary .remove-all-btn {
+.cart-subtotal {
+  font-weight: bold;
+  min-width: 100px;
+  text-align: right;
+}
+
+.restaurant-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.checkout-restaurant-btn {
+  background: forestgreen !important;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.checkout-restaurant-btn:hover {
+  background: #2bad2b !important;
+}
+
+.cart-summary {
+  margin-top: 20px;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cart-summary .btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.remove-all-btn {
   background: #b42100;
   color: white;
-  margin-left: 0;
 }
-.cart-summary .remove-all-btn:hover {
+
+.remove-all-btn:hover {
   background: #e92b00;
 }
-.cart-summary .remove-all-btn:active {
-  background: #ff5a35;
+
+.continue-btn {
+  background: #ffa620;
+  color: white;
+}
+
+.continue-btn:hover {
+  background: #ffda09;
+}
+
+.total-price {
+  color: #ff8800ff;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cart-container {
+    padding: 20px;
+  }
+
+  .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cart-subtotal {
+    width: 100%;
+    text-align: left;
+    margin-top: 5px;
+  }
+
+  .restaurant-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .toggle-btn {
+    margin-top: 5px;
+  }
+
+  .checkout-restaurant-btn {
+    width: 100%;
+  }
+
+  .cart-summary .btn {
+    width: 100%;
+  }
 }
