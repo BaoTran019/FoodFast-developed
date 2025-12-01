@@ -1,31 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Table, Badge, Button, Modal, Form } from "react-bootstrap";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-
-// Dữ liệu giả lập
-const initialDrones = [
-  { id: 1, name: "Drone A", status: "idle", lat: 10.7769, lng: 106.7009 },
-  { id: 2, name: "Drone B", status: "delivering", lat: 10.7790, lng: 106.6950 },
-  { id: 3, name: "Drone C", status: "charging", lat: 10.7629, lng: 106.6827 },
-  { id: 4, name: "Drone D", status: "idle", lat: 10.7535, lng: 106.6675 },
-  { id: 5, name: "Drone E", status: "delivering", lat: 10.7542, lng: 106.6660 },
-];
+import { fetchAllDrones, assignDroneToOrder } from "../../js/drone-admin";
 
 // Icon drone
 const droneIcon = new L.Icon({
-  iconUrl: "../../public/drone.png",
+  iconUrl: "/drone.png", // file trong public
   iconSize: [35, 35],
 });
 
 const DroneManagement = () => {
-  const [drones, setDrones] = useState(initialDrones);
-
+  const [drones, setDrones] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editDrone, setEditDrone] = useState(null);
+  const [orderIdAssign, setOrderIdAssign] = useState(""); // orderId để gán drone
 
-  // Hàm chọn màu badge theo status
+  // Lấy toàn bộ drone từ Firebase khi mount
+  useEffect(() => {
+    fetchAllDrones().then((data) => setDrones(data));
+  }, []);
+
+  // Chọn màu badge theo status
   const statusVariant = (status) => {
     switch (status) {
       case "idle":
@@ -39,25 +36,7 @@ const DroneManagement = () => {
     }
   };
 
-  // Thêm / chỉnh sửa drone
-  const handleSaveDrone = () => {
-    if (!editDrone.name || !editDrone.status || !editDrone.lat || !editDrone.lng) return;
-
-    setDrones((prev) => {
-      if (editDrone.id) {
-        // Update drone
-        return prev.map((d) => (d.id === editDrone.id ? editDrone : d));
-      } else {
-        // Add new drone
-        const newId = prev.length ? Math.max(...prev.map((d) => d.id)) + 1 : 1;
-        return [...prev, { ...editDrone, id: newId }];
-      }
-    });
-    setShowModal(false);
-    setEditDrone(null);
-  };
-
-  // Mở modal chỉnh sửa
+  // Mở modal chỉnh sửa drone
   const handleEditDrone = (drone) => {
     setEditDrone(drone);
     setShowModal(true);
@@ -69,12 +48,49 @@ const DroneManagement = () => {
     setShowModal(true);
   };
 
+  // Lưu drone (update local state, nếu muốn update Firestore thì thêm API gọi updateDoc)
+  const handleSaveDrone = () => {
+    if (!editDrone.name || !editDrone.status || !editDrone.lat || !editDrone.lng) return;
+
+    setDrones((prev) => {
+      if (editDrone.id) {
+        return prev.map((d) => (d.id === editDrone.id ? editDrone : d));
+      } else {
+        const newId = prev.length ? Math.max(...prev.map((d) => d.id)) + 1 : 1;
+        return [...prev, { ...editDrone, id: newId }];
+      }
+    });
+
+    setShowModal(false);
+    setEditDrone(null);
+  };
+
+  // Gán drone cho order
+  const handleAssignDrone = async (droneId) => {
+    if (!orderIdAssign) return alert("Nhập orderId để gán drone");
+    await assignDroneToOrder(droneId, orderIdAssign);
+    // reload lại drone list
+    const updatedDrones = await fetchAllDrones();
+    setDrones(updatedDrones);
+    setOrderIdAssign("");
+  };
+
   return (
     <Container style={{ paddingTop: "2rem" }}>
-      <h2>Drone Management - TP. HCM (Quận 1, 3, 5)</h2>
+      <h2>Drone Management - TP. HCM</h2>
       <Button className="my-3" onClick={handleAddDrone}>
         Thêm Drone Mới
       </Button>
+
+      {/* Input orderId gán */}
+      <Form.Group className="mb-3" style={{ maxWidth: "300px" }}>
+        <Form.Label>Order ID để gán drone</Form.Label>
+        <Form.Control
+          type="text"
+          value={orderIdAssign}
+          onChange={(e) => setOrderIdAssign(e.target.value)}
+        />
+      </Form.Group>
 
       {/* Table */}
       <Table striped bordered hover responsive className="my-3">
@@ -107,6 +123,15 @@ const DroneManagement = () => {
                 >
                   Edit
                 </Button>
+                {d.status === "idle" && (
+                  <Button
+                    variant="success"
+                    size="sm"
+                    onClick={() => handleAssignDrone(d.id)}
+                  >
+                    Gán Order
+                  </Button>
+                )}
               </td>
             </tr>
           ))}

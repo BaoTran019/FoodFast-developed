@@ -50,7 +50,6 @@ function OrderCard({ order }) {
         <h5 className='customed-header-6' style={{ fontWeight: 'lighter' }}>{order.payment_method}</h5>
         <h6 className='customed-header-6' style={{ marginInline: '0.8rem' }}>•</h6>
         {renderStatus()}
-        {renderButtonConfirm()}
       </div>
 
       <OrderDetail show={open} handleCloseModal={setOpen} order={order} />

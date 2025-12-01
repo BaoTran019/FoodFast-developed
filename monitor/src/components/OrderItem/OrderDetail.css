@@ -4,19 +4,15 @@
     color: grey;
 }
 
-span.Pending {
+span.pending {
     color: rgb(218, 0, 218);
-    font-weight: bold;
 }
-span.Processing {
+span.processing {
     color: rgb(242, 145, 0);
-    font-weight: bold;
 }
-span.Delivering {
+span.delivering {
     color: rgb(70, 133, 231);
-    font-weight: bold;
 }
-span.Completed {
+span.completed {
     color: rgb(0, 187, 12);
-    font-weight: bold;
 }

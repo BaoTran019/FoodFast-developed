@@ -15,7 +15,9 @@ export const createOrder = async (uid, initial_order) => {
             recipientName: initial_order.recipientName,
             recipientPhone: initial_order.recipientPhone,
             status: initial_order.status,
-            createdAt: serverTimestamp()
+            createdAt: serverTimestamp(),
+            lng: initial_order.shipping_lng,
+            lat: initial_order.shipping_lat,
         });
         console.log('Order ID:', orderDoc.id);
     }
