@@ -37,6 +37,10 @@ function OrderCard({ order }) {
     else if (order.status === 'delivering') updateStatus(order.id, 'completed');
   };
 
+  const handleCancelOrder = () => {
+    updateStatus(order.id, 'cancelled')
+  }
+
   const handleUpdatePaymentStatus = () => {
     updatePaymentStatus(order.id);
   };
@@ -71,8 +75,6 @@ function OrderCard({ order }) {
             <span>{order.recipientPhone}</span>
             <span className="mx-2">•</span>
             <span>{order.shipping_address}</span>
-            <span className="mx-2">•</span>
-            <span>{order.payment_method}</span>
           </div>
           <div>
             <span className="mx-2">•</span>
@@ -80,6 +82,7 @@ function OrderCard({ order }) {
           </div>
         </div>
         <div style={{ display: 'flex', gap: '10px' }}>
+          {order.status === 'pending' && (<Button className='cancel-btn' onClick={handleCancelOrder}>Hủy đơn hàng</Button>)}
           {renderPaymentStatusButton()}
           {renderStatusButton()}
           <Button className='show-detail-btn' onClick={() => setOpen(true)}>Xem đơn hàng</Button>

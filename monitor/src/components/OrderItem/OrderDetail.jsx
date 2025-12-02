@@ -56,13 +56,14 @@ function OrderDetail({ show, handleCloseModal, order }) {
   const { updateStatus } = useContext(OrdersContext);
   const [droneId, setDroneId] = useState(null)
 
-  const orderItem = order.items;
+  const orderItem = order?.items || [];
 
   const renderStatus = () => {
     if (order.status === 'pending') return <span className={order.status}>Đang chờ tiếp nhận</span>
     if (order.status === 'processing') return <span className={order.status}>Đang xử lý</span>
     if (order.status === 'delivering') return <span className={order.status}>Đang giao</span>
     if (order.status === 'completed') return <span className={order.status}>Hoàn tất</span>
+    if (order.status === 'cancelled') return <span className={order.status}>Đã hủy</span>
   }
 
   // Lấy drone khi modal mở và order đang giao

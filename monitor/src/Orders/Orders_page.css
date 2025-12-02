@@ -34,3 +34,8 @@
     color: rgb(0, 187, 12);
     border-bottom: 3px solid rgb(0, 187, 12);
 }
+
+.orders-filter .btn#cancelled.active, .orders-filter .btn#Cancelled:hover {
+    color: rgb(255, 59, 48);
+    border-bottom: 3px solid rgb(255, 59, 48);;
+}

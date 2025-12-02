@@ -12,6 +12,7 @@ function Orders_page() {
     {id: 'processing', label:'In Progress'},
     {id: 'delivering', label:'Ready for Delivery'},
     {id: 'completed', label:'Completed'},
+    {id: 'cancelled', label:'Cancelled'},
   ]
 
   return (

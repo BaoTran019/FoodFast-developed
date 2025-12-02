@@ -109,3 +109,35 @@ export async function completeDroneFlight(droneId) {
     console.error("Lỗi khi hoàn thành chuyến bay của drone:", err);
   }
 }
+
+export async function activeDrone(droneId) {
+  try {
+    console.log(droneId)
+    const droneRef = doc(db, "drones", droneId);
+    await updateDoc(droneRef, {
+      lat: 10.7832,
+      lng: 106.70625,
+      orderId: "",
+      status: "idle"
+    });
+    console.log(`Drone ${droneId} không còn hoạt động.`);
+  } catch (err) {
+    console.error("Lỗi khi unactive drone:", err);
+  }
+}
+
+export async function unActiveDrone(droneId) {
+  try {
+    console.log(droneId)
+    const droneRef = doc(db, "drones", droneId);
+    await updateDoc(droneRef, {
+      lat: 10.7832,
+      lng: 106.70625,
+      orderId: "",
+      status: "unactive"
+    });
+    console.log(`Drone ${droneId} không còn hoạt động.`);
+  } catch (err) {
+    console.error("Lỗi khi unactive drone:", err);
+  }
+}

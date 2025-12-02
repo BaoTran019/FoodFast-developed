@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Container, Table, Badge, Button, Modal, Form } from "react-bootstrap";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { fetchAllDrones, assignDroneToOrder } from "../../js/drone-admin";
+import { fetchAllDrones, assignDroneToOrder, unActiveDrone, activeDrone } from "../../js/drone-admin";
+import OrderDetail from "../components/OrderItem/OrderDetail";
+import { OrdersContext } from "../contexts/OrdersContext";
 
 // Icon drone
 const droneIcon = new L.Icon({
@@ -16,11 +18,21 @@ const DroneManagement = () => {
   const [showModal, setShowModal] = useState(false);
   const [editDrone, setEditDrone] = useState(null);
   const [orderIdAssign, setOrderIdAssign] = useState(""); // orderId để gán drone
+  const [showOrder, setShowOrder] = useState(false)
+
+  const { orders } = useContext(OrdersContext)
+  const [order, setOrder] = useState([])
 
   // Lấy toàn bộ drone từ Firebase khi mount
   useEffect(() => {
     fetchAllDrones().then((data) => setDrones(data));
   }, []);
+
+  const handleGetOrder = (orderId) => {
+    const temp_order = orders.filter((order) => order.id === orderId);
+    setOrder(temp_order[0] || null); // nếu không tìm thấy order, set null
+  }
+
 
   // Chọn màu badge theo status
   const statusVariant = (status) => {
@@ -31,10 +43,27 @@ const DroneManagement = () => {
         return "success";
       case "charging":
         return "warning";
+      case "unactive":       // thêm case này
+        return "dark";
       default:
         return "light";
     }
   };
+
+  const handleUnActiveDrone = async (droneId) => {
+    unActiveDrone(droneId)
+    setDrones(prev =>
+      prev.map(d => d.id === droneId ? { ...d, status: 'unactive' } : d)
+    );
+
+  }
+  const handleActiveDrone = async (droneId) => {
+    activeDrone(droneId)
+    setDrones(prev =>
+      prev.map(d => d.id === droneId ? { ...d, status: 'idle' } : d)
+    );
+
+  }
 
   // Mở modal chỉnh sửa drone
   const handleEditDrone = (drone) => {
@@ -78,61 +107,39 @@ const DroneManagement = () => {
   return (
     <Container style={{ paddingTop: "2rem" }}>
       <h2>Drone Management - TP. HCM</h2>
-      <Button className="my-3" onClick={handleAddDrone}>
-        Thêm Drone Mới
-      </Button>
-
-      {/* Input orderId gán */}
-      <Form.Group className="mb-3" style={{ maxWidth: "300px" }}>
-        <Form.Label>Order ID để gán drone</Form.Label>
-        <Form.Control
-          type="text"
-          value={orderIdAssign}
-          onChange={(e) => setOrderIdAssign(e.target.value)}
-        />
-      </Form.Group>
 
       {/* Table */}
       <Table striped bordered hover responsive className="my-3">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Status</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <th>Actions</th>
+            <th style={{ width: "20%" }}>ID</th>
+            <th style={{ width: "15%" }}>Status</th>
+            <th style={{ width: "15%" }}>Latitude</th>
+            <th style={{ width: "15%" }}>Longitude</th>
+            <th style={{ width: "35%" }}>Order</th>
           </tr>
         </thead>
         <tbody>
           {drones.map((d) => (
-            <tr key={d.id}>
-              <td>{d.id}</td>
-              <td>{d.name}</td>
+            <tr key={d.id}
+              onClick={() => d.orderId && (handleGetOrder(d.orderId), setShowOrder(true))}
+              style={{ cursor: d.orderId ? 'pointer' : 'default' }}
+            >
+              <td>
+                {d.id}{" "}
+                {d.status === 'idle' ? (
+                  <Button size="sm" variant="secondary" onClick={() => handleUnActiveDrone(d.id)} style={{marginLeft:'10px'}}>Unactive</Button>
+                ) : d.status === 'unactive' ? (
+                  <Button size="sm" variant="success" onClick={() => handleActiveDrone(d.id)} style={{marginLeft:'10px'}}>Active</Button>
+                ) : null}
+
+              </td>
               <td>
                 <Badge bg={statusVariant(d.status)}>{d.status}</Badge>
               </td>
               <td>{d.lat}</td>
               <td>{d.lng}</td>
-              <td>
-                <Button
-                  variant="info"
-                  size="sm"
-                  className="me-1"
-                  onClick={() => handleEditDrone(d)}
-                >
-                  Edit
-                </Button>
-                {d.status === "idle" && (
-                  <Button
-                    variant="success"
-                    size="sm"
-                    onClick={() => handleAssignDrone(d.id)}
-                  >
-                    Gán Order
-                  </Button>
-                )}
-              </td>
+              <td>{d.orderId}</td>
             </tr>
           ))}
         </tbody>
@@ -160,6 +167,8 @@ const DroneManagement = () => {
           </Marker>
         ))}
       </MapContainer>
+
+      {order && <OrderDetail show={showOrder} handleCloseModal={setShowOrder} order={order} />}
 
       {/* Modal thêm/chỉnh sửa */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
