@@ -54,8 +54,24 @@ const OrderProvider = ({ children }) => {
         }
     };
 
+    const cancelOrder = async (orderId) => {
+        try {
+            // 1. Update backend / firestore
+            await updateOrderStatus(orderId, 'cancelled');
+
+            // 2. Update local state
+            setOrders(prevOrders =>
+                prevOrders.map(order =>
+                    order.id === orderId ? { ...order, status: 'cancelled' } : order
+                )
+            );
+        } catch (err) {
+            console.error("Failed to cancel status:", err);
+        }
+    };
+
     return (
-        <OrderContext.Provider value={{ orders, addOrder, updateStatus }}>
+        <OrderContext.Provider value={{ orders, addOrder, updateStatus, cancelOrder }}>
             {children}
         </OrderContext.Provider>
     )

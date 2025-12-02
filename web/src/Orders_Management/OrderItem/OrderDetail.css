@@ -16,3 +16,6 @@ span.delivering {
 span.completed {
     color: rgb(0, 187, 12);
 }
+span.cancelled {
+    color: rgb(255, 59, 48);
+}

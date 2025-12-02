@@ -19,6 +19,8 @@ function OrderCard({ order }) {
       return <h5 className={`customed-header-6 status ${order.status}`}>{order.status}</h5>
     else if (order.status === 'completed')
       return <h5 className={`customed-header-6 status ${order.status}`}>{order.status}</h5>
+    else if (order.status === 'cancelled')
+      return <h5 className={`customed-header-6 status ${order.status}`}>{order.status}</h5>
   }
 
   const handleConfirm = async (e) => {
@@ -46,8 +48,6 @@ function OrderCard({ order }) {
         <h5 className='customed-header-6' style={{ fontWeight: 'lighter' }}>
           {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(order.totalPrice)}
         </h5>
-        <h6 className='customed-header-6' style={{ marginInline: '0.8rem' }}>•</h6>
-        <h5 className='customed-header-6' style={{ fontWeight: 'lighter' }}>{order.payment_method}</h5>
         <h6 className='customed-header-6' style={{ marginInline: '0.8rem' }}>•</h6>
         {renderStatus()}
       </div>

@@ -212,10 +212,44 @@ function CheckoutPage() {
                       setInitialOrder(prev => ({ ...prev, shipping_address: v }));
                     }}
                   />
+
+                  <Form.Label>Phương thức thanh toán</Form.Label>
+                  <Form.Select
+                    value={initialOrder.payment_method}
+                    onChange={(e) => setInitialOrder(prev => ({ ...prev, payment_method: e.target.value }))}
+                    style={{ fontSize: 'smaller' }}
+                  >
+                    <option value="COD">💵 Tiền mặt</option>
+                    <option value="VNPAY" disabled>💳 VNPAY (Chưa hỗ trợ)</option>
+                  </Form.Select>
                 </Form.Group>
 
+                {/* PAYMENT 
+                <Form.Group className='form-group mb-3'>
+                  <div className='form-group-label'>Phương thức thanh toán</div>
+
+                  <div style={{ marginBlock: '1em', display: 'flex', gap: '1em', alignItems: 'center' }}>
+                    <Form.Check type='radio' name="paymentMethod" value="COD"
+                      checked={initialOrder.payment_method === 'COD'}
+                      onChange={(e) => setInitialOrder(prev => ({ ...prev, payment_method: e.target.value }))}
+                    />
+                    <Form.Label><img src={cash} style={{ height: 40 }} />Tiền mặt</Form.Label>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '1em', alignItems: 'center' }}>
+                    <Form.Check type='radio' name="paymentMethod" value="VNPAY"
+                      checked={initialOrder.payment_method === 'VNPAY'}
+                      onChange={(e) => setInitialOrder(prev => ({ ...prev, payment_method: e.target.value }))}
+                      disabled='true'
+                    />
+                    <Form.Label><img src={vnpayLogo} style={{ height: 40 }} />VNPAY</Form.Label><span>Chưa hỗ trợ</span>
+                  </div>
+                </Form.Group>*/}
+              </Col>
+
+              <Col md={6} xs={12}>
                 {/* MAP */}
-                <div style={{ height: '300px', marginTop: '1em' }}>
+                <div style={{ height: '300px' }}>
                   <MapContainer
                     center={[markerPos.lat, markerPos.lng]}
                     zoom={15}
@@ -233,31 +267,8 @@ function CheckoutPage() {
                     <FlyToLocation position={markerPos} />
                   </MapContainer>
                 </div>
-              </Col>
 
-              {/* PAYMENT */}
-              <Col md={6} xs={12}>
-                <Form.Group className='form-group mb-3'>
-                  <div className='form-group-label'>Phương thức thanh toán</div>
-
-                  <div style={{ marginBlock: '1em', display: 'flex', gap: '1em', alignItems: 'center' }}>
-                    <Form.Check type='radio' name="paymentMethod" value="COD"
-                      checked={initialOrder.payment_method === 'COD'}
-                      onChange={(e) => setInitialOrder(prev => ({ ...prev, payment_method: e.target.value }))}
-                    />
-                    <Form.Label><img src={cash} style={{ height: 40 }} />Tiền mặt</Form.Label>
-                  </div>
-
-                  <div style={{ display: 'flex', gap: '1em', alignItems: 'center' }}>
-                    <Form.Check type='radio' name="paymentMethod" value="VNPAY"
-                      checked={initialOrder.payment_method === 'VNPAY'}
-                      onChange={(e) => setInitialOrder(prev => ({ ...prev, payment_method: e.target.value }))}
-                    />
-                    <Form.Label><img src={vnpayLogo} style={{ height: 40 }} />VNPAY</Form.Label>
-                  </div>
-                </Form.Group>
-
-                <Form.Group style={{ textAlign: 'center' }}>
+                <Form.Group style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '1.8rem' }}>
                   <Button as={NavLink} to="/cart">Quay lại giỏ hàng</Button>
                   <Button type='submit' className='checkout-btn'>Hoàn tất đơn hàng</Button>
                 </Form.Group>

@@ -10,7 +10,6 @@ export const createOrder = async (uid, initial_order) => {
             restaurantName: initial_order.restaurantName,
             items: initial_order.items,
             totalPrice: initial_order.totalPrice,
-            payment_method: initial_order.payment_method,
             shipping_address: initial_order.shipping_address,
             recipientName: initial_order.recipientName,
             recipientPhone: initial_order.recipientPhone,

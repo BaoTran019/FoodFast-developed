@@ -18,7 +18,7 @@ function OrdersManagement() {
         .sort((a, b) => b.createdAt.toDate() - a.createdAt.toDate()); // mới nhất lên đầu
 
 
-    const statuses = ['all', 'pending', 'processing', 'delivering', 'completed'];
+    const statuses = ['all', 'pending', 'processing', 'delivering', 'completed', 'cancelled'];
 
     return (
         <Container style={{ paddingBlock: '18vh' }}>

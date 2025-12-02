@@ -25,6 +25,9 @@
 .order-card.completed {
     border-left: 5px solid rgb(0, 187, 12);
 }
+.order-card.cancelled {
+    border-left: 5px solid rgb(255, 59, 48);   /* Đỏ tươi */
+}
 
 .status {
     font-weight: lighter;
@@ -40,6 +43,9 @@
 }
 .status.completed {
     color: rgb(0, 187, 12);
+}
+.status.cancelled {
+    color: rgb(255, 59, 48);
 }
 
 .new-orders-btn {
@@ -58,6 +64,12 @@
     /*rgb(0, 75, 187)*/
     border: 1px solid rgb(70, 133, 231);
 }
+
+.cancelled-btn {
+    background-color: rgb(255, 59, 48);
+    border: 1px solid rgb(255, 59, 48);
+}
+
 
 
 /* FOR MOBILE */

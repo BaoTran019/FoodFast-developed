@@ -54,7 +54,7 @@ function OrderDetail({ show, handleCloseModal, order }) {
   const [dronePos, setDronePos] = useState(null);
   const [orderPos, setOrderPos] = useState(null);
   const [nearOrder, setNearOrder] = useState(false);
-  const { updateStatus } = useContext(OrderContext);
+  const { updateStatus, cancelOrder } = useContext(OrderContext);
   const [droneId, setDroneId] = useState(null)
 
   const orderItem = order.items;
@@ -64,6 +64,7 @@ function OrderDetail({ show, handleCloseModal, order }) {
     if (order.status === 'processing') return <span className={order.status}>Đang xử lý</span>
     if (order.status === 'delivering') return <span className={order.status}>Đang giao</span>
     if (order.status === 'completed') return <span className={order.status}>Hoàn tất</span>
+    if (order.status === 'cancelled') return <span className={order.status}>Đã hủy</span>
   }
 
   // Lấy drone khi modal mở và order đang giao
@@ -104,6 +105,10 @@ function OrderDetail({ show, handleCloseModal, order }) {
     updateStatus(order.id); // ví dụ cập nhật status
     completeDroneFlight(droneId)
     setNearOrder(false);
+  }
+
+  const handleCancelOrder = () => {
+    cancelOrder(order.id);
   }
 
   const routePositions = dronePos && orderPos ? [dronePos, orderPos] : [];
@@ -149,7 +154,7 @@ function OrderDetail({ show, handleCloseModal, order }) {
           ))}
         </div>
 
-        <p style={{ fontWeight: 'lighter', fontSize: 'large', marginTop:'20px' }}>
+        <p style={{ fontWeight: 'lighter', fontSize: 'large', marginTop: '20px' }}>
           Tổng cộng: <span style={{ color: 'black' }}>
             {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(order.totalPrice)}
           </span>
@@ -173,6 +178,15 @@ function OrderDetail({ show, handleCloseModal, order }) {
           <div style={{ textAlign: 'center', marginTop: '1em' }}>
             <Button onClick={handleConfirmOrder} variant="success">
               Xác nhận đơn hàng
+            </Button>
+          </div>
+        )}
+
+        {/* Nút hủy đơn hàng */}
+        {order.status === 'pending' && (
+          <div style={{ textAlign: 'center', marginTop: '1em' }}>
+            <Button onClick={handleCancelOrder} variant="success">
+              Hủy đơn hàng
             </Button>
           </div>
         )}
