@@ -55,7 +55,7 @@ function CustomerModal({show, handleCloseModal, customer}) {
                         <Form.Control type='email' value={edittedInfo.email}
                             onChange={(e) => setInfo({ ...edittedInfo, email: e.target.value })}></Form.Control>
                     </Form.Group>
-                    <Button type='submit' style={{ marginTop: '1rem' }}>Chỉnh sửa</Button>
+                    {/*<Button type='submit' style={{ marginTop: '1rem' }}>Chỉnh sửa</Button>*/}
 
                 </Form>
             </Modal.Body>

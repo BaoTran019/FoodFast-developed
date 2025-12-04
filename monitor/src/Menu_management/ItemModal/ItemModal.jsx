@@ -45,10 +45,7 @@ function ItemModal({ show, handleCloseModal, item }) {
                     <Row>
 
                         <Col xl={4}>
-                            <div>
-                                <img src={item.image} style={{ height: 'auto', width: '250px' }}></img>
-                            </div>
-                            <input type="file" />
+
                             <div style={{ marginBlock: '1em', display: 'flex', gap: '1em', alignItems: 'center' }}>
                                 <Form.Check type='radio' name='availability' checked={edittedItem.available === true}
                                     required
@@ -74,8 +71,15 @@ function ItemModal({ show, handleCloseModal, item }) {
                                 <Form.Label>Giá tiền</Form.Label>
                                 <Form.Control type='text' value={edittedItem.price}
                                     onChange={(e) => setItem({ ...edittedItem, price: Number(e.target.value) })}></Form.Control>
+                                <Form.Control
+                                    type='text'
+                                    placeholder='Hình ảnh món ăn'
+                                    value={edittedItem.image}
+                                    onChange={(e) => setItem({ ...edittedItem, image: e.target.value })}
+                                />
+
                             </Form.Group>
-                            <Button type='submit' style={{marginTop:'1rem'}}>Chỉnh sửa</Button>
+                            <Button type='submit' style={{ marginTop: '1rem' }}>Chỉnh sửa</Button>
                         </Col>
                     </Row>
                 </Form>

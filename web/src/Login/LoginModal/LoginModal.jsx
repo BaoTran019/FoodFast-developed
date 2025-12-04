@@ -6,6 +6,7 @@ import logo from "../../assets/logo/logo.png";
 import { AuthContext } from "../../context/AuthenticationContext"
 import { AuthenContext } from "../../context/AuthContext";
 import { toast } from "react-toastify";
+import { sendForgotPassword } from "../../../js/sign-in";
 
 function LoginModal({ show, handleClose }) {
 
@@ -14,6 +15,7 @@ function LoginModal({ show, handleClose }) {
     email: '',
     password: ''
   })
+  const [email, setEmail] = useState("")
 
   const [register_info, setRegister] = useState({
     name: '',
@@ -44,6 +46,16 @@ function LoginModal({ show, handleClose }) {
       toast.warning('Số điện thoại hoặc mật khẩu không đúng')
     }
 
+  }
+
+  const handleForgotPassword = async (e) => {
+    e.preventDefault()
+    try {
+      await sendForgotPassword(email)
+      toast.success('Đã gửi email xác nhận')
+    } catch (err) {
+      toast.warning ('Có lỗi xảy ra')
+    }
   }
 
   const handleRegister = async (e) => {
@@ -181,6 +193,31 @@ function LoginModal({ show, handleClose }) {
             </Button>
           </form>
         )}
+
+        {/* Form Quên mật khẩu */}
+        {formType === "forgot" && (
+          <form onSubmit={(e) => handleForgotPassword(e)}>
+            <div className="mb-3">
+              <label className="form-label">Email</label>
+              <input
+                type="email"
+                className="form-control rounded-3"
+                required
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+              />
+            </div>
+            <Button
+              variant="warning"
+              type="submit"
+              className="w-100 fw-bold text-white"
+              style={{ backgroundColor: "#ff6600", border: "none" }}
+            >
+              Gửi email đổi mật khẩu
+            </Button>
+          </form>
+        )}
+
 
         {/* Form Đăng ký */}
         {formType === "register" && (

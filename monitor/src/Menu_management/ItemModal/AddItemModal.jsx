@@ -45,10 +45,6 @@ function AddItemModal({ show, handleCloseModal }) {
                 <Form onSubmit={handleAddProduct}>
                     <Row>
                         <Col xl={4}>
-                            <div>
-                                <img alt='Thêm hình ảnh' style={{ height: 'auto', width: '250px' }}></img>
-                            </div>
-                            <input type="file" />
                             <div style={{ marginBlock: '1em', display: 'flex', gap: '1em', alignItems: 'center' }}>
                                 <Form.Check type='radio' name='availability' checked={addedItem.available === true}
                                     required
@@ -70,6 +66,9 @@ function AddItemModal({ show, handleCloseModal }) {
                                 <Form.Label>Tên món ăn</Form.Label>
                                 <Form.Control type='text' placeholder='Tên gọi món ăn'
                                     onChange={(e) => setItem({ ...addedItem, name: e.target.value })}></Form.Control>
+                                <Form.Label>Hình ảnh</Form.Label>
+                                <Form.Control type='text' placeholder='Hình ảnh món ăn'
+                                    onChange={(e) => setItem({ ...image, name: e.target.value })}></Form.Control>
                                 <Form.Label>Giá tiền</Form.Label>
                                 <Form.Control type='text' placeholder='Giá tiền'
                                     onChange={(e) => setItem({ ...addedItem, price: Number(e.target.value) })}></Form.Control>
